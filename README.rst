@@ -77,7 +77,7 @@ or use custom parametrs:
 
     short_text = RedactorField(
         verbose_name=u'Text',
-        redactor_options={'lang': 'en', 'focus': 'true'},
+        redactor_options={'lang': 'en', 'focus': True},
         upload_to='tmp/',
         allow_file_upload=True,
         allow_image_upload=True
