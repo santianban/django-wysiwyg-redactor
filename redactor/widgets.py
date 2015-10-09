@@ -16,6 +16,13 @@ class RedactorEditor(widgets.Textarea):
         self.custom_options = kwargs.pop('redactor_options', {})
         self.allow_file_upload = kwargs.pop('allow_file_upload', True)
         self.allow_image_upload = kwargs.pop('allow_image_upload', True)
+
+        default_attrs = {'class': 'redactor-box',
+                         'data-redactor-options': json_dumps(self.options)}
+        if 'attrs' in kwargs:
+            default_attrs.update(kwargs['attrs'])
+
+        kwargs['attrs'] = default_attrs
         super(RedactorEditor, self).__init__(*args, **kwargs)
 
     @property
@@ -33,18 +40,6 @@ class RedactorEditor(widgets.Textarea):
                 kwargs={'upload_to': self.upload_to}
             )
         return options
-
-    def render(self, name, value, attrs=None):
-        if 'class' not in attrs.keys():
-            attrs['class'] = ''
-
-        attrs['class'] += ' redactor-box'
-
-        attrs['data-redactor-options'] = json_dumps(self.options)
-
-        html = super(RedactorEditor, self).render(name, value, attrs)
-
-        return mark_safe(html)
 
     def _media(self):
         js = (
