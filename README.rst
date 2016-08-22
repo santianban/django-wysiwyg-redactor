@@ -33,11 +33,11 @@ Getting started
 
 .. code-block:: python
 
-    INSTALLED_APPS = (  
-        # ...  
-        'redactor',  
-        # ...  
-    ) 
+    INSTALLED_APPS = (
+        # ...
+        'redactor',
+        # ...
+    )
 
 - Add `url(r'^redactor/', include('redactor.urls'))`, to urls.py
 
@@ -71,7 +71,7 @@ Using in model
         title = models.CharField(max_length=250, verbose_name=u'Title')
         short_text = RedactorField(verbose_name=u'Text')
 
-or use custom parametrs:
+or use custom parameters:
 
 .. code-block:: python
 
@@ -165,7 +165,7 @@ File Storages
 -------------
 *django-wysiwyg-redactor* defaults to using the default media storage for your Django application.
 
-This can be overriden to use a different storage backend with this settings.py variable:
+This can be overridden to use a different storage backend with this settings.py variable:
 
 .. code-block::
 
