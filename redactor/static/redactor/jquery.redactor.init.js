@@ -30,10 +30,17 @@ if (typeof redactor_custom_options === 'undefined') {
         // Credit to the approach taken in django-selectable:
         // https://github.com/mlavin/django-selectable
         $(document).on('click', '.add-row', function () {
-            $(this).parents('.inline-related')
-                   .find('tr.form-row:not(.empty-form)').last()
-                   .find('textarea.redactor-box')
-                   .trigger('redactor:init');
+            var add_row = $(this);
+            var row =
+                add_row.parents('.inline-related')
+                       .find('tr.form-row:not(.empty-form)').last();
+            if (row.length === 0) {
+                row =
+                    add_row.parents('.inline-group')
+                           .find('.last-related:not(.empty-form)').last();
+            }
+            row.find('textarea.redactor-box')
+               .trigger('redactor:init');
         });
     });
 })(jQuery);
