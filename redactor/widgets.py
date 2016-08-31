@@ -7,45 +7,43 @@ from django.conf import settings
 from redactor.utils import json_dumps
 
 
-GLOBAL_OPTIONS = getattr(settings, 'REDACTOR_OPTIONS', {})
-
-
 class RedactorEditor(widgets.Textarea):
     def __init__(self, *args, **kwargs):
-        self.upload_to = kwargs.pop('upload_to', '')
-        self.custom_options = kwargs.pop('redactor_options', {})
-        self.allow_file_upload = kwargs.pop('allow_file_upload', True)
-        self.allow_image_upload = kwargs.pop('allow_image_upload', True)
+        upload_to = kwargs.pop('upload_to', '')
+        self.options = getattr(settings, 'REDACTOR_OPTIONS', {})
+        self.options.update(kwargs.pop('redactor_options', {}))
 
-        default_attrs = {'class': 'redactor-box',
-                         'data-redactor-options': json_dumps(self.options)}
-        if 'attrs' in kwargs:
-            default_attrs.update(kwargs['attrs'])
+        if kwargs.pop('allow_file_upload', True):
+            self.options['fileUpload'] = reverse_lazy(
+                'redactor_upload_file', kwargs={'upload_to': upload_to}
+            )
+        if kwargs.pop('allow_image_upload', True):
+            self.options['imageUpload'] = reverse_lazy(
+                'redactor_upload_image', kwargs={'upload_to': upload_to}
+            )
 
-        kwargs['attrs'] = default_attrs
+        widget_attrs = {'class': 'redactor-box'}
+        widget_attrs.update(kwargs.get('attrs', {}))
+        widget_attrs.update({'data-redactor-options': self.options})
+
+        kwargs['attrs'] = widget_attrs
         super(RedactorEditor, self).__init__(*args, **kwargs)
 
-    @property
-    def options(self):
-        options = GLOBAL_OPTIONS.copy()
-        options.update(self.custom_options)
-        if self.allow_file_upload:
-            options['fileUpload'] = reverse_lazy(
-                'redactor_upload_file',
-                kwargs={'upload_to': self.upload_to}
-            )
-        if self.allow_image_upload:
-            options['imageUpload'] = reverse_lazy(
-                'redactor_upload_image',
-                kwargs={'upload_to': self.upload_to}
-            )
-        return options
+    def render(self, name, value, attrs=None):
+        """
+        Must parse self.options with json_dumps on self.render.
+        Because at some point Django calls RedactorEditor.__init__ before
+        loading the urls, and it will break.
+        """
+        attrs['data-redactor-options'] = json_dumps(self.options)
+        html = super(RedactorEditor, self).render(name, value, attrs)
+        return mark_safe(html)
 
     def _media(self):
         js = (
             'redactor/jquery.redactor.init.js',
             'redactor/redactor{0}.js'.format('' if settings.DEBUG else '.min'),
-            'redactor/langs/{0}.js'.format(GLOBAL_OPTIONS.get('lang', 'en')),
+            'redactor/langs/{0}.js'.format(self.options.get('lang', 'en')),
         )
 
         if 'plugins' in self.options:
