@@ -1,5 +1,6 @@
 clean:
 	@find . -name "*.pyc" -delete
+	@rm -R dist/
 
 release:
 	@sed -ic -e s/`cat VERSION`/$(version)/ setup.py redactor/__init__.py
@@ -10,4 +11,5 @@ release:
 	@git push --tags
 	@git push origin master
 	@make clean
+	@python setup.py sdist bdist_wheel
 	@twine upload dist/*
