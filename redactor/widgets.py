@@ -10,7 +10,7 @@ from redactor.utils import json_dumps
 class RedactorEditor(widgets.Textarea):
     def __init__(self, *args, **kwargs):
         upload_to = kwargs.pop('upload_to', '')
-        self.options = getattr(settings, 'REDACTOR_OPTIONS', {})
+        self.options = dict(getattr(settings, 'REDACTOR_OPTIONS', {}))
         self.options.update(kwargs.pop('redactor_options', {}))
 
         if kwargs.pop('allow_file_upload', True):
