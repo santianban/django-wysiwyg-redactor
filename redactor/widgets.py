@@ -40,23 +40,24 @@ class RedactorEditor(widgets.Textarea):
         return mark_safe(html)
 
     def _media(self):
+        _min = '' if settings.DEBUG else '.min'
         js = (
             'redactor/jquery.redactor.init.js',
-            'redactor/redactor{0}.js'.format('' if settings.DEBUG else '.min'),
-            'redactor/langs/{0}.js'.format(self.options.get('lang', 'en')),
+            'redactor/redactor{}.js'.format(_min),
+            'redactor/langs/{}.js'.format(self.options.get('lang', 'en')),
         )
 
         if 'plugins' in self.options:
             plugins = self.options.get('plugins')
             for plugin in plugins:
                 js = js + (
-                    'redactor/plugins/{0}.js'.format(plugin),
+                    'redactor/plugins/{}.js'.format(plugin),
                 )
 
         css = {
             'all': (
-                'redactor/css/redactor.css',
-                'redactor/css/django_admin.css',
+                'redactor/redactor{}.css'.format(_min),
+                'redactor/django_admin.css',
             )
         }
         return forms.Media(css=css, js=js)
