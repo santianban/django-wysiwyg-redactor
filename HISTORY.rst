@@ -1,7 +1,7 @@
 History
 =======
 
-0.5.0 Mar 2, 2017
+0.5.0 Mar 3, 2017
 
  * Upgrade to Redactor II 2.2
  * New licencing
