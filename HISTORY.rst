@@ -1,6 +1,20 @@
 History
 =======
 
+0.5.0 Mar 2, 2017
+
+ * Upgrade to Redactor II 2.2
+ * New licencing
+ * Some minor improvements
+ * Redactor Changelog: https://imperavi.com/redactor/log/
+
+0.4.9.1 Aug 31, 2016
+
+ * Better support for stack inlines
+ * Fix some bugs related to custom redactor options
+ * Compatibility with Django 1.10
+ * Some code refactoring
+
 0.4.9 Aug 2, 2015
 
  * Update redactor v10.2.2
