@@ -9,9 +9,7 @@ Screenshot
 What's that
 -----------------
 
-*django-wysiwyg-redactor* is a text editor application for Django, using `Redactor WYSIWYG editor <http://redactorjs.com/>`_
-
-Sponsored by `Mess Marketing <http://www.thisismess.com>`_, we use the latest version of redactorjs, always up-to-date.
+*django-wysiwyg-redactor* is a text editor application for Django, using `Redactor WYSIWYG editor <https://imperavi.com/redactor/>`_
 
 Dependency
 ----------
@@ -194,9 +192,6 @@ Made by robots, or what?
 ------------------------
 Awesome people, you should see the `AUTHORS <https://github.com/douglasmiranda/django-wysiwyg-redactor/blob/master/AUTHORS>`_ file.
 
-And our awesome sponsor:
-
-Mess Marketing from Chicago, IL
-jshedd@thisismess.com
-thisismess.com
-@etchalon
+About the licensing
+-------------------
+You may want to see the `LICENSE <https://github.com/douglasmiranda/django-wysiwyg-redactor/blob/master/LICENSE>`_ file.
